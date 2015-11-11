@@ -1,9 +1,12 @@
 /**
  * Created by nbugash on 10/11/15.
  */
+/* Global variable */
+var encodedHTTPRequest;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    var encodedHTTPRequest = request.encodedHTTPRequest;
-    if (encodedHTTPRequest) {
+    //var encodedHTTPRequest = request.encodedHTTPRequest;
+    var type = request.type;
+    if (type == "encodedHTTPRequest") {
         chrome.tabs.create({
             url: chrome.extension.getURL('../lib/validate.html'),
             active: false
@@ -15,12 +18,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 focused: true
                 // incognito, top, left, ...
             });
-            /* send message to the Validate.html page */
-            chrome.runtime.sendMessage({
-                encodedHTTPRequest: encodedHTTPRequest
-            }, function(response){
-                console.log(response.farewell);
-            });
+            /* Saving the encodedHTTPRequest */
+            encodedHTTPRequest = request.data.encodedHTTPRequest;
         });
     }
 });
+
+chrome.runtime.onConnect.addListener(function(port){
+    console.assert(port.name == 'validate');
+    port.onMessage.addListener(function(msg) {
+       if (msg.type == "getEncodedHTTPRequest"){
+           port.postMessage({
+               type: "endcodedHTTPRequest",
+               data: {
+                   encodedHTTPRequest: encodedHTTPRequest
+               }
+           })
+       }
+    });
+});
+
