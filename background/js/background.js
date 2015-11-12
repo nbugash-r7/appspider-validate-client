@@ -3,6 +3,7 @@
  */
 /* Global variable */
 var encodedHTTPRequest;
+
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     //var encodedHTTPRequest = request.encodedHTTPRequest;
     var type = request.type;
@@ -24,17 +25,23 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     }
 });
 
-chrome.runtime.onConnect.addListener(function(port){
-    console.assert(port.name == 'validate');
-    port.onMessage.addListener(function(msg) {
-       if (msg.type == "getEncodedHTTPRequest"){
-           port.postMessage({
-               type: "endcodedHTTPRequest",
-               data: {
-                   encodedHTTPRequest: encodedHTTPRequest
-               }
-           })
-       }
-    });
+chrome.runtime.onConnect.addListener(function(channel){
+    var name = channel.name;
+
+    if (name == "validate.js"){
+        channel.onMessage.addListener(function(message){
+            if (message.type == "getEncodedHTTPRequest") {
+                channel.postMessage({
+                    fromJS: "background.js",
+                    type: "encodedHTTPRequest",
+                    data: {
+                        encodedHTTPRequest: encodedHTTPRequest
+                    }
+                });
+            }
+        });
+    }
 });
+
+
 
