@@ -3,9 +3,9 @@
  */
 /* Global variable */
 var encodedHTTPRequest;
-
+var encodedHTTPRequests = {};
+var id = 0;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    //var encodedHTTPRequest = request.encodedHTTPRequest;
     var type = request.type;
     if (type == "encodedHTTPRequest") {
         chrome.tabs.create({
@@ -21,6 +21,11 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             /* Saving the encodedHTTPRequest */
             encodedHTTPRequest = request.data.encodedHTTPRequest;
+            encodedHTTPRequests[id] = {
+                type: type,
+                encodedHTTPRequest: encodedHTTPRequest
+            };
+            id++;
         });
     }
 });
