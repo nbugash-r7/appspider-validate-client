@@ -3,8 +3,6 @@
  */
 /* Global variable */
 var encodedHTTPRequest;
-var encodedHTTPRequests = {};
-var id = 0;
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     var type = request.type;
     if (type == "encodedHTTPRequest") {
@@ -21,11 +19,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             });
             /* Saving the encodedHTTPRequest */
             encodedHTTPRequest = request.data.encodedHTTPRequest;
-            encodedHTTPRequests[id] = {
-                type: type,
-                encodedHTTPRequest: encodedHTTPRequest
-            };
-            id++;
         });
     }
 });
