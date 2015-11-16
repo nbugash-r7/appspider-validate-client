@@ -4,12 +4,12 @@
 /* Hard coding the encoded HTTP request for now */
 
 /* LIST of XPath */
-var vuln_report = '/html/body/div/div[1]/h1';
+var VULN_REPORT = '/html/body/div/div[1]/h1';
 
 document.addEventListener('click', function(e){
-    var vulnerabilitysection = document.evaluate(vuln_report, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
-    if (vulnerabilitysection.snapshotItem(0)) {
-        var page_title = vulnerabilitysection.snapshotItem(0).textContent;
+    var results = document.evaluate(VULN_REPORT, document, null, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE,null);
+    if (results.snapshotItem(0)) {
+        var page_title = results.snapshotItem(0).textContent;
         if (page_title.match(/(Vulnerabilities Report)/)) {
             console.log("This is a Vulnerabilities Report");
             var srcElement = e.srcElement;
