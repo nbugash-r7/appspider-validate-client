@@ -14,6 +14,8 @@ This is the chrome plugin to use the validate button for chrome
 
 3. Click on the 'Load unpacked extension...' button
 
+4. Navigate to the location of the repo, select the folder and click on open 
+
 
 ### Verify if the plugin works
 
