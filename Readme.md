@@ -10,7 +10,7 @@ This is the chrome plugin to use the validate button for chrome
     $ git clone https://github.com/nbugash-r7/appspider-validate-client.git
     ```
   
-2. Type 'chrome://extensions'
+2. Type 'chrome://extensions' in the chrome browser
 
 3. Click on the 'Load unpacked extension...' button
 
