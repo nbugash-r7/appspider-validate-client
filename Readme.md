@@ -17,7 +17,7 @@ This is the chrome plugin to use the validate button for chrome
 
 ### Verify if the plugin works
 
-1. Go to www.webscantest.com/report
+1. Go to the reports section (e.g www.webscantest.com/report)
 
 2. Select the Vulnerabilities from the Reports dropdown
 
