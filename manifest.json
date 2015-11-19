@@ -9,5 +9,8 @@
   "background":{
     "scripts":["lib/js/jquery.min.js", "background/js/background.js"],
     "persistent": false
-  }
+  },
+  "permissions": [
+    "<all_urls>","webRequestBlocking"
+  ]
 }
