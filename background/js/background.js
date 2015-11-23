@@ -102,7 +102,10 @@ chrome.runtime.onConnect.addListener(function(channel){
                         if (xhr.readyState == 4 && xhr.status == 200){
                             channel.postMessage({
                                 type: 'httpresponse',
-                                data: xhr.responseText
+                                data: {
+                                    attack_response: xhr.getAllResponseHeaders(),
+                                    content_response: xhr.responseText
+                                }
                             });
                         }
                     };
@@ -111,11 +114,12 @@ chrome.runtime.onConnect.addListener(function(channel){
                         header = header.toUpperCase();
                         if (restrictedChromeHeaders.indexOf(header) > -1){
                             xhr.setRequestHeader(token + header, httpRequest.headers[header] );
-                            headers[token + header] = httpRequest.headers[header];
                         } else {
-                            xhr.setRequestHeader(header, httpRequest.headers[header] );
-                            headers[header] = httpRequest.headers[header];
+                            if ( header != 'INITIAL-REQUEST-LINE') {
+                                xhr.setRequestHeader(header, httpRequest.headers[header] );
+                            }
                         }
+                        headers[header] = httpRequest.headers[header];
                     }
                     xhr.send(' ');
             }
@@ -126,8 +130,8 @@ chrome.runtime.onConnect.addListener(function(channel){
 chrome.webRequest.onBeforeSendHeaders.addListener(
     function(details) {
         for (var i = 0; i < details.requestHeaders.length; ++i) {
-            if (details.requestHeaders[i].name.match(/appsider-validate/i)){
-                var name = details.requestHeaders[i].name;
+            var name = details.requestHeaders[i].name;
+            if (name.match(/appspider-validate/i)){
                 name = name.slice(token.length);
                 details.requestHeaders[i].name = name;
                 details.requestHeaders[i].value = headers[name];

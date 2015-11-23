@@ -11,14 +11,14 @@ document.addEventListener('click', function(e){
     if (results.snapshotItem(0)) {
         var page_title = results.snapshotItem(0).textContent;
         if (page_title.match(/(Vulnerabilities Report)/)) {
-            console.log("This is a Vulnerabilities Report");
+            //console.log("This is a Vulnerabilities Report");
             var srcElement = e.srcElement;
             if (srcElement.attributes.onmousedown && srcElement.attributes.onmousedown.value) {
                 var attributes = srcElement.attributes.onmousedown.value;
                 attributes = attributes.split(" ");
                 var encodedHTTPRequest = attributes[attributes.length -1].slice(1,-3);
                 if (encodedHTTPRequest){
-                    console.log('Sending encodedHTTPRequest ' + encodedHTTPRequest );
+                    //console.log('Sending encodedHTTPRequest ' + encodedHTTPRequest );
                     chrome.runtime.sendMessage({
                         type: "encodedHTTPRequest",
                         data: {
