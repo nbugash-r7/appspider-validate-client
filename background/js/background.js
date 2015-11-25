@@ -103,7 +103,7 @@ chrome.runtime.onConnect.addListener(function(channel){
                     xhr.onreadystatechange = function(){
                         if (xhr.readyState == 4 && xhr.status == 200){
                             channel.postMessage({
-                                type: 'httpresponse',
+                                type: 'httpResponse',
                                 data: {
                                     attack_response: xhr.getAllResponseHeaders(),
                                     content_response: xhr.responseText
