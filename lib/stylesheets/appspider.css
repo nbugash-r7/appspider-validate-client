@@ -4,6 +4,26 @@ body {
     color: #111;
 }
 
+.request-headers {
+    padding-top: 5px;
+}
+
+.request-headers input {
+    height: 25px;
+}
+
+.request-headers a {
+    text-align: center;
+}
+
+.request-headers .header-remove-btn {
+    height: 25px;
+}
+
+.input_field_wrap {
+    font-size: 10px;
+}
+
 .btn-default {
     font-size: 13px;
 }

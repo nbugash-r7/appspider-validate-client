@@ -1,5 +1,26 @@
-<div class='form-group'>
+<div id='attack-request-headers-form' class='form-group'>
     <label>Attack Request Header</label>
     <textarea rows='5' id='attack-request-headers' class='form-control'>{{attack_request_header}}
     </textarea>
+</div>
+<div id='pattack-request-headers-form' class='form-group' style='display: none'>
+    <label>Attack Request Header</label>
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">GET <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">GET</a></li>
+                        <li><a href="#">POST</a></li>
+                    </ul>
+                </div><!-- /btn-group -->
+                <input type="text" class="form-control" aria-label="...">
+            </div><!-- /input-group -->
+        </div>
+        <div class="col-sm-2">
+            <button type="button" class="btn btn-primary add_field_button">Add Headers</button>
+        </div>
+    </div>
+    <div class="input_fields_wrap"></div>
 </div>
