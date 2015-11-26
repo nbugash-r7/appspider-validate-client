@@ -94,7 +94,8 @@ chrome.runtime.onConnect.addListener(function(channel){
                     *       'User-Agent': [valid user agent],
                     *       :
                     *       :
-                    *   }
+                    *   },
+                    *   payload: [payload data]
                     * }
                     * */
                     var httpRequest = message.data;
@@ -111,19 +112,33 @@ chrome.runtime.onConnect.addListener(function(channel){
                             });
                         }
                     };
-                    xhr.open(httpRequest['method'], httpRequest['url'], true);
+                    switch(httpRequest['method'].toUpperCase()){
+                        case 'GET':
+                            xhr.open('GET', httpRequest['url'], true);
+                            break;
+                        case 'POST':
+                            xhr.open('POST', httpRequest['url'], true);
+                            break;
+                    }
                     for (var header in httpRequest.headers) {
                         header = header.toUpperCase();
-                        if (restrictedChromeHeaders.indexOf(header) > -1){
-                            xhr.setRequestHeader(token + header, httpRequest.headers[header] );
-                        } else {
-                            if ( header != 'INITIAL-REQUEST-LINE') {
+                        if (!header.match(/INITIAL-REQUEST-LINE/i)){
+                            if (restrictedChromeHeaders.indexOf(header) > -1){
+                                xhr.setRequestHeader(token + header, httpRequest.headers[header] );
+                            } else {
                                 xhr.setRequestHeader(header, httpRequest.headers[header] );
                             }
                         }
                         headers[header] = httpRequest.headers[header];
                     }
-                    xhr.send(' ');
+                    switch(httpRequest['method'].toUpperCase()){
+                        case 'GET':
+                            xhr.send();
+                            break;
+                        case 'POST':
+                            xhr.send(httpRequest.payload);
+                            break;
+                    }
             }
         });
     }

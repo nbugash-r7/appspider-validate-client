@@ -1,5 +1,10 @@
 .btn-default {
-    font-size: 12px;
+    font-size: 13px;
+}
+
+.container-fluid {
+    padding-top: 10px;
+    padding-bottom: 20px;
 }
 
 #appspider-validate {
@@ -11,3 +16,4 @@
 #attack-response-template {
     margin-top: 30px;
 }
+
