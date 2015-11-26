@@ -3,6 +3,9 @@ body {
     background-color: #aaa;
     color: #111;
 }
+.row-header {
+    margin-right: 0px;
+}
 
 .request-headers {
     padding-top: 5px;
