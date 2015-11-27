@@ -1,8 +1,18 @@
 body {
     padding-bottom: 30px;
-    background-color: #aaa;
-    color: #111;
+    background-color: #333;
+    color: #999;
 }
+
+.nav > li > a {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+#step-template {
+    padding-top: 20px;
+}
+
 .row-header {
     margin-right: 0px;
 }
