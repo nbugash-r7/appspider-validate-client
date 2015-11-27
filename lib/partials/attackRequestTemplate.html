@@ -1,9 +1,9 @@
-<div id='attack-request-headers-form' class='form-group'>
+<div id='attack-request-headers-form-{{step_id}}' class='form-group attack-request-headers-form'>
     <label>Attack Request Header</label>
-    <textarea rows='5' id='attack-request-headers' class='form-control'>{{attack_request_header}}
+    <textarea rows='5' id='attack-request-headers-{{step_id}}' class='form-control'>{{attack_request_header}}
     </textarea>
 </div>
-<div id='pattack-request-headers-form' class='form-group' style='display: none'>
+<div id='pattack-request-headers-form-{{step_id}}' class='form-group pattack-request-headers-form' style='display: none'>
     <label>Attack Request Header</label>
     <div class="row row-header">
         <div class="col-sm-10">
@@ -22,5 +22,5 @@
             <button type="button" class="btn btn-primary add_field_button">Add Headers</button>
         </div>
     </div>
-    <div class="input_fields_wrap"></div>
+    <div id="input_fields_wrap-{{step_id}}" class="input_fields_wrap"></div>
 </div>

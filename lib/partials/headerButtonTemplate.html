@@ -3,7 +3,7 @@
         <!-- Single button -->
         <label id='select-view-lbl'>View:</label>
         <div class="btn-group">
-            <button id='select-view-btn' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id='select-view-btn-{{step_id}}' type="button" class="btn btn-default dropdown-toggle select-view-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Raw <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -13,7 +13,7 @@
         </div>
         <label id='protcol-lbl'>Protocol:</label>
         <div class="btn-group">
-            <button id='protocol-btn' type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id='protocol-btn-{{step_id}}' type="button" class="btn btn-default dropdown-toggle protocol-btn" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 HTTP <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
@@ -22,11 +22,11 @@
             </ul>
         </div>
         <div class="btn-group" role="group" aria-label="...">
-            <button id='proxy-btn' type="button" class="btn btn-default">Proxy</button>
-            <button id='edit-cookies-btn' type="button" class="btn btn-default">Edit cookies</button>
-            <button id='reset-request-btn' type="button" class="btn btn-default">Reset request</button>
-            <button id='send-request-btn' type="button" class="btn btn-default">Send request</button>
-            <button id='compare-btn' type="button" class="btn btn-default">Compare</button>
+            <button id='proxy-btn-{{step_id}}' type="button" class="btn btn-default proxy-btn">Proxy</button>
+            <button id='edit-cookies-btn-{{step_id}}' type="button" class="btn btn-default edit-cookies-btn">Edit cookies</button>
+            <button id='reset-request-btn-{{step_id}}' type="button" class="btn btn-default reset-request-btn">Reset request</button>
+            <button id='send-request-btn-{{step_id}}' type="button" class="btn btn-default send-request-btn">Send request</button>
+            <button id='compare-btn-{{step_id}}' type="button" class="btn btn-default compare-btn">Compare</button>
         </div>
 
     </div>
