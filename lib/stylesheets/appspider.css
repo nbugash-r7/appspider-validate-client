@@ -13,6 +13,10 @@ body {
     padding-top: 20px;
 }
 
+input.form-control {
+    height: 32px;
+}
+
 .row-header {
     margin-right: 0px;
 }
