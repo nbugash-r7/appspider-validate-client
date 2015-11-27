@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
                 type: 'popup',
                 focused: true,
                 width: 800,
-                height: 850
+                height: 860
                 // incognito, top, left, ...
             });
             /* Saving the encodedHTTPRequest */
