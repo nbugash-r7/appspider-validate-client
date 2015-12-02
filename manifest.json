@@ -10,5 +10,6 @@
     "scripts":["lib/js/jquery.min.js", "background/js/background.js"],
     "persistent": true
   },
-  "permissions": [  "webRequest", "webRequestBlocking", "<all_urls>" ]
+  "permissions": [  "webRequest", "webRequestBlocking", "<all_urls>" ],
+  "web_accessible_resources":["lib/misc/cookiepopup.html"]
 }

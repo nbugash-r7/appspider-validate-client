@@ -34,7 +34,7 @@ var token = 'appspider-validate-';
 /* Comming from the Content.js */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var type = request.type;
-    if (type == "encodedHTTPRequest") {
+    if (type === "encodedHTTPRequest") {
         chrome.tabs.create({
             url: chrome.extension.getURL('../lib/validate.html'),
             active: false
@@ -103,7 +103,7 @@ chrome.runtime.onConnect.addListener(function (channel) {
                         var xhr = new XMLHttpRequest();
                         headers = {};
                         xhr.onreadystatechange = function () {
-                            if (xhr.readyState == 4 && xhr.status == 200) {
+                            if (xhr.readyState === 4 && xhr.status === 200) {
                                 channel.postMessage({
                                     type: 'httpResponse',
                                     data: {
