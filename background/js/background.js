@@ -31,6 +31,8 @@ var headers;
 
 var token = 'appspider-validate-';
 
+var current_step;
+
 /* Comming from the Content.js */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var type = request.type;
@@ -59,7 +61,7 @@ chrome.runtime.onConnect.addListener(function (channel) {
     var name = channel.name;
 
     try {
-        if (name == "validate.js") {
+        if (name === "validate.js" || name === "cookiepopup.js") {
             channel.onMessage.addListener(function (message) {
                 switch (message.type) {
                     case 'getEncodedHTTPRequest':
@@ -117,7 +119,7 @@ chrome.runtime.onConnect.addListener(function (channel) {
                                     type: 'httpResponse',
                                     data: {
                                         attack_response: 'Request error',
-                                        content_response: 'Unable to send request as an https protocol'
+                                        content_response: 'Unable to send attack request'
                                     }
                                 });
                             }
@@ -149,6 +151,34 @@ chrome.runtime.onConnect.addListener(function (channel) {
                                 xhr.send(httpRequest.payload);
                                 break;
                         }
+
+                    /*
+                     * message = {
+                     *   'type': 'sendRequest',
+                     *   'data': {
+                     *       'method': 'GET' or 'POST',
+                     *       'url': 'http://webscantest.com',
+                     *       'headers': {
+                     *           'User-Agent': [valid user agent],
+                     *           :
+                     *           :
+                     *      }
+                     *   }
+                     * }
+                     * */
+                    case 'setCurrentStep':
+                        current_step = message.data.current_step;
+                        break;
+                    case 'getCurrentStep':
+                        channel.postMessage({
+                            fromJS: 'background.js',
+                            type: 'getCurrentStep',
+                            data: {
+                                current_step: current_step
+                            }
+                        });
+                    default:
+                        break;
                 }
             });
         }
