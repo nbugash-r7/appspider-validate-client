@@ -61,7 +61,7 @@ chrome.runtime.onConnect.addListener(function (channel) {
     var name = channel.name;
 
     try {
-        if (name === "validate.js" || name === "cookiepopup.js") {
+        if (name === "validate.js" || name === "cookiepopup.js" || name === "eventhandler.js") {
             channel.onMessage.addListener(function (message) {
                 switch (message.type) {
                     case 'getEncodedHTTPRequest':
@@ -177,6 +177,7 @@ chrome.runtime.onConnect.addListener(function (channel) {
                                 current_step: current_step
                             }
                         });
+                        break;
                     default:
                         break;
                 }
