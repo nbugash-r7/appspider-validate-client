@@ -5,7 +5,7 @@ body {
 }
 
 .nav > li > a {
-    font-size: 25px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -17,6 +17,13 @@ input.form-control {
     height: 32px;
 }
 
+textarea.form-control {
+    font-size: 12px;
+}
+
+label {
+    font-size: 12px;
+}
 .row-header {
     margin-right: 0px;
 }

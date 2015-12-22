@@ -1,9 +1,11 @@
 {{#cookies:name}}
-<div class="col-xs-4"><input class="form-control" type="text" placeholder="Name" value="{{name}}"/></div>
-<div class="col-xs-4"><input class="form-control" type="text" placeholder="Value" value="{{cookies[name]}}"/></div>
-<div class="col-xs-4">
-    <a>
-        <button type="button" class="btn btn-default appspider-cookie-removerow">X</button>
-    </a>
-</div>
+    <div class="value-pair">
+        <div class="col-xs-4"><input class="form-control" type="text" placeholder="Name" value="{{name}}"/></div>
+        <div class="col-xs-4"><input class="form-control" type="text" placeholder="Value" value="{{cookies[name]}}"/></div>
+        <div class="col-xs-4">
+            <a>
+                <button type="button" class="btn btn-default appspider-cookie-remove-row">X</button>
+            </a>
+        </div>
+    </div>
 {{/cookies}}
