@@ -14,7 +14,8 @@ body {
 }
 
 input.form-control {
-    height: 32px;
+    height: 25px;
+    font-size: 12px;
 }
 
 textarea.form-control {
@@ -70,4 +71,8 @@ label {
 .appspider-cookie-row div {
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+.appspider-cookie-remove-row {
+    font-size: 8px;
 }
