@@ -33,7 +33,7 @@ var token = 'appspider-validate-';
 
 var current_step;
 
-/* Comming from the Content.js */
+/* Coming from the Content.js */
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     var type = request.type;
     if (type === "encodedHTTPRequest") {
@@ -46,8 +46,8 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                 tabId: tab.id,
                 type: 'popup',
                 focused: true,
-                width: 800,
-                height: 860
+                width: 810,
+                height: 745
                 // incognito, top, left, ...
             });
             /* Saving the encodedHTTPRequest */
