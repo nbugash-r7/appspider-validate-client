@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookies</title>
+    <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="css/cookie.css">
+    <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/appspider.js"></script>
+    <script type="text/javascript" src="js/cookieapp.js"></script>
+</head>
+<body ng-app="CookieApp">
+<div class="container" id="cookie-body" ng-controller="CookieController as cookieCtrl">
+    <div class="header navbar navbar-default navbar-fixed-top">
+        <a href="#" class="navbar-brand">
+            <img id="appspider-logo" src="img/logo.png" alt="AppSpider Cookie Logo">
+        </a>
+    </div>
+    <h3>Cookies</h3>
+    <div ng-repeat="(key, value) in cookieCtrl.cookies">
+        <div class="row">
+            <div class="col-md-9">
+                <div class="input-group">
+                    <input type="text" class="form-control input-sm" value="{{key}}" aria-label="...">
+                    <span class="input-group-btn key-value-separator"></span>
+                    <input type="text" class="form-control input-sm cookie-value" value="{{value}}"aria-label="...">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid cookie-btn">
+        <div class="row">
+            <div class="btn-group pull-right" role="group" aria-label="...">
+                <button class="btn btn-default clear-btn" id="clear-btn-{{cookieCtrl.id}}">Clear</button>
+                <button class="btn btn-default add-cookie-btn" id="add-cookie-btn-{{cookieCtrl.id}}">Add</button>
+                <button class="btn btn-default save-btn" id="save-cookie-{{cookieCtrl.id}}">Save</button>
+            </div>
+        </div>
+    </div>
+    <div class="footer col-xs-12">
+        <ul class="nav navbar-nav">
+            <li><a href="#">Help</a></li>
+            <li><a href="#">About AppSpider</a></li>
+            <li><a href="#">Contact Us</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

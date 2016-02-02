@@ -1,20 +1,27 @@
 {
-  "manifest_version": 2,
-  "name": "AppSpider Validate",
+  "name": "AppSpider Chrome Validate",
+  "description": "Chrome extension used to validate web attacks",
   "version": "0.0.1",
-  "content_scripts": [{
-    "matches": ["<all_urls>"],
-    "js":["lib/js/jquery.min.js", "content/js/content.js"]
-  }],
-  "background":{
-    "scripts":["lib/js/jquery.min.js", "background/js/background.js"],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["js/jquery-2.2.0.min.js","background.js"],
     "persistent": true
   },
+  "content_scripts": [
+    {
+      "matches":["<all_urls>"],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
   "permissions": [
     "webRequest",
     "webRequestBlocking",
     "<all_urls>",
     "storage",
-    "unlimitedStorage" ],
-  "web_accessible_resources":["lib/misc/cookiepopup.html"]
+    "unlimitedStorage",
+    "tabs",
+    "activeTab"
+  ]
 }

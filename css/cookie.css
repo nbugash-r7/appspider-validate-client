@@ -1,0 +1,31 @@
+h3 {
+    text-align: center;
+}
+#appspider-logo {
+    height: 30px;
+}
+#cookie-body {
+    padding-top: 40px;
+}
+.cookie-value {
+    min-width: 400px;
+}
+.footer {
+    background-color:#ffffff;
+    bottom:0;
+    position:fixed;
+    padding:10px;
+}
+.btn-group {
+    padding-top:10px;
+}
+
+.navbar-nav>li, .navbar-nav{
+    float: left!important;
+}
+.navbar-collapse.collapse {
+    display: block!important;
+}
+.key-value-separator {
+    width:0px;
+}
