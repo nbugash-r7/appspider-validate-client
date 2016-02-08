@@ -4,7 +4,10 @@
   "version": "0.0.1",
   "manifest_version": 2,
   "background": {
-    "scripts": ["js/jquery-2.2.0.min.js","background.js"],
+    "scripts": ["js/jquery-2.2.0.min.js",
+                "js/underscore-min.js",
+                "js/appspider.js",
+                "background.js"],
     "persistent": true
   },
   "content_scripts": [

@@ -1,6 +1,29 @@
 /**
  * Created by nbugash on 15/01/16.
  */
+var token = 'appspider-';
+var restrictedChromeHeaders = [
+    "ACCEPT-CHARSET",
+    "ACCEPT-ENCODING",
+    "ACCESS-CONTROL-REQUEST-HEADERS",
+    "ACCESS-CONTROL-REQUEST-METHOD",
+    "CONTENT-LENGTHNECTION",
+    "CONTENT-LENGTH",
+    "COOKIE",
+    "CONTENT-TRANSFER-ENCODING",
+    "DATE",
+    "EXPECT",
+    "HOST",
+    "KEEP-ALIVE",
+    "ORIGIN",
+    "REFERER",
+    "TE",
+    "TRAILER",
+    "TRANSFER-ENCODING",
+    "UPGRADE",
+    "USER-AGENT",
+    "VIA"
+];
 
 var AppSpiderValidateApp = angular.module('AppSpiderValidateApp', []);
 var Angular = {
@@ -15,35 +38,7 @@ var Angular = {
                 appspider.attacks = attacks;
             };
             appspider.prettifyAttack = function(headers) {
-                var attack_str = "";
-                try {
-                    if (headers.REQUEST) {
-                        for (var key in headers.REQUEST) {
-                            attack_str += headers.REQUEST[key] + " "
-                        }
-                        attack_str += "\r\n";
-                    }
-                } catch (err) {
-                    console.error("App.js: Error handling headers.REQUEST");
-                    return;
-                }
-                for (var header in headers) {
-                    switch(header) {
-                        case "REQUEST":
-                            break;
-                        case "Cookie":
-                            var cookie_str = "";
-                            for(var key in headers[header]) {
-                                cookie_str += key + "=" + headers[header][key] + "; "
-                            }
-                            attack_str += header +": " + cookie_str + "\r\n";
-                            break;
-                        default:
-                            attack_str += header + ": " + headers[header] + "\r\n";
-                            break;
-                    }
-                }
-                return attack_str;
+                return AppSpider.helper.convertJSONToString(headers);
             };
             appspider.updateAttack = function(attack_id, attack_attr, content) {
                 AppSpider.attack.load(attack_id, function(attack){
@@ -99,24 +94,11 @@ var Angular = {
                 });
                 channel.onMessage.addListener(function(message){
                     if (message.from === "Background.js" && message.type === "currentStep" ) {
-                        chrome.tabs.create({
-                            url: chrome.extension.getURL('cookiepopup.html'),
-                            active: false
-                        }, function (tab) {
-                            // After the tab has been created, open a window to inject the tab
-                            chrome.windows.create({
-                                tabId: tab.id,
-                                type: 'popup',
-                                focused: true,
-                                width: 600,
-                                height: 435
-                                // incognito, top, left, ...
-                            }, function(window){
-                                chrome.windows.update(window.id,{
-                                    focused: true
-                                });
-                            });
-                        });
+                        /* Parameters:
+                        * (1) html page
+                        * (2) width
+                        * (3) height*/
+                        AppSpider.chrome.openNewWindow('cookiepopup.html',600, 435);
                     } else {
                         console.error("App.js: Unable to handle message from "
                             + message.from + " with message type: "+ message.type);
@@ -141,35 +123,55 @@ var Angular = {
                  * to be used by the onBeforeSendHeaders Listener
                  */
                 AppSpider.attack.load($scope, attack_id, function(attack){
-                    var channel = chrome.runtime.connect({name: "app.js"});
-                    channel.postMessage({
-                        type: 'savehttpHeaders',
-                        data: {
-                            headers: attack.headers
-                        }
-                    });
 
-                    channel.onMessage.addListener(function(message){
-                        /* Message from background.js */
-                        if (message.type === "httpHeaderSaved" && message.from === "Background.js") {
-                            $http({
-                                method: attack.headers.REQUEST.method,
-                                url: button.protocoltype + "://" + attack.headers.Host + attack.headers.REQUEST.uri,
-                                data: attack.payload
-                            }).then(function successRequest(response){
-                                console.log("Success!!");
-                                attack['response_headers'] = response.headers();
-                                attack['response_content'] = response.data;
-                                AppSpider.attack.save(attack_id, attack);
-                            }, function errorRequest(response){
-                                console.error("App.js: Error - " + response);
-                            });
+                    var headers = AppSpider.http.modifyHeaders(attack.headers);
+                    //for (var header in attack.headers) {
+                    //    if (attack.headers.hasOwnProperty(header)){
+                    //        if(_.contains(restrictedChromeHeaders, header.toUpperCase())){
+                    //            if (header === "Cookie") {
+                    //                var cookie_str = "";
+                    //                for(var key in attack.headers.Cookie) {
+                    //                    if(attack.headers.Cookie.hasOwnProperty(key)){
+                    //                        cookie_str += key + "=" + attack.headers.Cookie[key] + "; "
+                    //                    }
+                    //                }
+                    //                headers[token+header] = cookie_str;
+                    //            } else {
+                    //                headers[token+header] = attack.headers[header];
+                    //            }
+                    //        } else {
+                    //            headers[header] = attack.headers[header];
+                    //        }
+                    //    }
+                    //}
 
-                        } else {
-                            console.error("App.js: Invalid message from " + message.from +
-                                " with message type:" + message.type);
-                        }
-                    });
+                    if (typeof headers === "object") {
+                        $http({
+                            method: attack.headers.REQUEST.method,
+                            url: button.protocoltype + "://" + attack.headers.Host + attack.headers.REQUEST.uri,
+                            headers: headers,
+                            data: attack.payload
+                        }).then(function successRequest(response){
+                            console.log(response.statusText + ": Received response successfully!!");
+                            switch(typeof response.headers()){
+                                case "object":
+                                    attack.response_headers = AppSpider.helper.convertJSONToString(response.headers());
+                                    break;
+                                default:
+                                    attack.response_headers = response.headers();
+                                    break;
+                            }
+                            attack.response_content = response.data;
+                            AppSpider.attack.save(attack_id, attack);
+                        }, function errorRequest(response){
+                            attack.response_headers = "Error:\r\nUnable to obtain the response header for " +
+                                button.protocoltype.toLocaleLowerCase() + "://" + attack.headers.Host + attack.headers.REQUEST.uri;
+                            attack.response_content = "Error: Unable to obtain the response body";
+                            AppSpider.attack.save(attack_id, attack);
+                            console.error("App.js: Error - " + response);
+                        });
+                    }
+
                 });
             };
             button.compare = function(attack_id){
@@ -202,17 +204,3 @@ AppSpiderValidateApp.controller('AttackController', ['$scope', Angular.controlle
 AppSpiderValidateApp.controller('PanelController', [Angular.controller.PanelController]);
 AppSpiderValidateApp.controller('ButtonController', ['$scope','$http', Angular.controller.ButtonController]);
 AppSpiderValidateApp.directive('prettifyheader', [Angular.directive.prettifyheader]);
-
-chrome.storage.onChanged.addListener(function(attacks, namespace){
-    for (var attack_id in attacks) {
-        var attack_storage = attacks[attack_id];
-        console.log('Storage key "%s" in namespace "%s" changed. ' +
-            'Old value was "%s", new value is "%s".',
-            attack_id,
-            namespace,
-            attack_storage.oldValue,
-            attack_storage.newValue);
-        $('textarea#attack-response-headers-'+attack_id).val(attack_storage.newValue.response_headers);
-        $('textarea#attack-response-content-'+attack_id).val(attack_storage.newValue.response_content);
-    }
-});

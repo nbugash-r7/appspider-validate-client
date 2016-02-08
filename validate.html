@@ -8,6 +8,7 @@
     <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
     <script type="text/javascript" src="js/appspider.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
 </head>
@@ -55,7 +56,7 @@
                                 <div class="raw">
                                     <textarea name="attack-request-header-input" id="attack-request-headers-{{attack_id}}"
                                               cols="30" rows="10" class="form-control attack-request-headers"
-                                              ng-model="attack.headers" prettifyheader></textarea>
+                                              ng-model="attack.headers" prettifyheader readonly></textarea>
                                 </div>
                                 <div class="prettify">
 
@@ -122,7 +123,7 @@
                                 <label for="attack-response-headers-{{attack_id}}">Attack response</label>
                                 <textarea name="attack-response-header-input" id="attack-response-headers-{{attack_id}}"
                                           cols="30" rows="10" class="form-control attack-response-headers" readonly
-                                          ng-model="attack.response_headers" prettifyheader></textarea>
+                                          ng-model="attack.response_headers"></textarea>
                                 <textarea name="attack-response-content-input" id="attack-response-content-{{attack_id}}"
                                           cols="30" rows="10" class="form-control attack-response-content"
                                           ng-model="attack.response_content" readonly
