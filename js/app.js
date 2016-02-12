@@ -1,36 +1,13 @@
 /**
  * Created by nbugash on 15/01/16.
  */
-var token = 'appspider-';
-var restrictedChromeHeaders = [
-    "ACCEPT-CHARSET",
-    "ACCEPT-ENCODING",
-    "ACCESS-CONTROL-REQUEST-HEADERS",
-    "ACCESS-CONTROL-REQUEST-METHOD",
-    "CONTENT-LENGTHNECTION",
-    "CONTENT-LENGTH",
-    "COOKIE",
-    "CONTENT-TRANSFER-ENCODING",
-    "DATE",
-    "EXPECT",
-    "HOST",
-    "KEEP-ALIVE",
-    "ORIGIN",
-    "REFERER",
-    "TE",
-    "TRAILER",
-    "TRANSFER-ENCODING",
-    "UPGRADE",
-    "USER-AGENT",
-    "VIA"
-];
 
 var AppSpiderValidateApp = angular.module('AppSpiderValidateApp', []);
 var Angular = {
     controller: {
         AttackController: function($scope) {
             var appspider = this;
-
+            appspider.view = 'RAW';
             AppSpider.attacks.getAllAttacks($scope, function(results){
                 appspider.getAttacks(results);
             });
@@ -67,6 +44,15 @@ var Angular = {
             panel.isSelected = function (checkTab) {
                 return panel.tab === checkTab;
             };
+            panel.hideHeader = function(header) {
+                if (header === "REQUEST") {
+                    return true;
+                } else if (header === "Cookie") {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
         },
         ButtonController: function($scope, $http) {
             var button = this;
@@ -125,25 +111,6 @@ var Angular = {
                 AppSpider.attack.load($scope, attack_id, function(attack){
 
                     var headers = AppSpider.http.modifyHeaders(attack.headers);
-                    //for (var header in attack.headers) {
-                    //    if (attack.headers.hasOwnProperty(header)){
-                    //        if(_.contains(restrictedChromeHeaders, header.toUpperCase())){
-                    //            if (header === "Cookie") {
-                    //                var cookie_str = "";
-                    //                for(var key in attack.headers.Cookie) {
-                    //                    if(attack.headers.Cookie.hasOwnProperty(key)){
-                    //                        cookie_str += key + "=" + attack.headers.Cookie[key] + "; "
-                    //                    }
-                    //                }
-                    //                headers[token+header] = cookie_str;
-                    //            } else {
-                    //                headers[token+header] = attack.headers[header];
-                    //            }
-                    //        } else {
-                    //            headers[header] = attack.headers[header];
-                    //        }
-                    //    }
-                    //}
 
                     if (typeof headers === "object") {
                         $http({
@@ -177,6 +144,9 @@ var Angular = {
             button.compare = function(attack_id){
                 console.log("Compare button clicked attack id: " + attack_id);
             };
+            button.isSelectedView = function(view) {
+                return button.view === view;
+            }
         }
     },
     directive: {

@@ -16,13 +16,13 @@ body {
 #main-wrapper {
     height: 100%;
     overflow-y: auto;
-    padding: 0px 0 0px 0;
+    padding: 0px 0 120px 0;
 }
 #main {
     position: relative;
     height: 100%;
     overflow-y: auto;
-    padding: 0 15px 100px;
+    padding: 0 15px 0px;
 }
 #sidebar-wrapper {
     height: 100%;
@@ -117,3 +117,42 @@ label {
     margin-top: 5px;
 }
 
+button.dropdown-toggle.prettify {
+    height: 34px;
+}
+div.header-pair {
+    padding-top: 3px;
+}
+div.header-key {
+    padding-right: 0;
+}
+div.header-value {
+    padding: 0 5px 0 ;
+}
+div.remove-header-btn {
+     padding: 0 0 0;
+ }
+div.header-key input {
+    height: 24px;
+    font-size: 12px;
+}
+div.header-value input {
+    height: 24px;
+    font-size: 12px;
+}
+div.remove-header-btn a {
+    height: 24px;
+    font-size: 10px;
+    text-align: center;
+    text-decoration: none;
+}
+div.header-spacing {
+    padding: 0 0 10px 0;
+}
+div.container.header-pair {
+    padding-left: 0;
+    margin-left: 0;
+    margin-right: 18px;
+    width: 100%;
+    padding-right: 15px;
+}

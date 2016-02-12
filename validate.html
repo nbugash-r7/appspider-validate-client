@@ -1,8 +1,9 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="AppSpiderValidateApp">
+<html lang="en" ng-app="AppSpiderValidateApp" xmlns="http://www.w3.org/1999/html">
 <head>
-    <meta charset="UTF-8">
     <title>Appspider Validate</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="css/validate.css">
     <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
@@ -16,12 +17,9 @@
 <div class="container" ng-controller="AttackController as appspider">
     <div id="header" class="navbar navbar-default navbar-fixed-top">
         <div class="navbar-header">
-            <button class="navbar-toggle collapsed">
-
-            </button>
+            <button class="navbar-toggle collapsed"></button>
             <a href="#" class="navbar-brand">
-                <img id="appspider-logo" src="img/logo.png"
-                     alt="AppSpider Validate Logo">
+                <img id="appspider-logo" src="img/logo.png" alt="AppSpider Validate Logo">
             </a>
         </div>
         <nav class="collapse navbar-collapse">
@@ -49,23 +47,60 @@
                     <h3>AppSpider Validate</h3>
                 </div>
                 <div ng-repeat="(attack_id,attack) in appspider.attacks">
-                    <section ng-model="attack">
+                    <section ng-model="attack" ng-controller="ButtonController as button">
                         <div class="panel" ng-show="panel.isSelected(attack_id)">
                             <div class="form-group">
                                 <label for="attack-request-headers-{{attack_id}}">Attack request</label>
-                                <div class="raw">
+                                <div class="raw" ng-show="button.isSelectedView('RAW')">
                                     <textarea name="attack-request-header-input" id="attack-request-headers-{{attack_id}}"
                                               cols="30" rows="10" class="form-control attack-request-headers"
                                               ng-model="attack.headers" prettifyheader readonly></textarea>
                                 </div>
-                                <div class="prettify">
-
+                                <div class="prettify" ng-show="button.isSelectedView('Prettify')">
+                                    <div class="row header-spacing">
+                                        <div class="col-lg-12">
+                                            <div class="input-group">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-default dropdown-toggle prettify" data-toggle="dropdown"
+                                                            aria-haspopup="true" aria-expanded="false">GET <span class="caret"></span>
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a href="#">GET</a></li>
+                                                        <li><a href="#">POST</a></li>
+                                                    </ul>
+                                                </div>
+                                                <input type="text" class="form-control" aria-label="..."
+                                                       value="{{attack.headers.Host}}{{attack.headers.REQUEST.uri}}"/>
+                                                <span class="input-group-btn"></span>
+                                                <a type="button" class="btn btn-success form-control" aria-label="..."
+                                                       value="+" data-toggle="tooltip" data-placement="right" title="Add new header">
+                                                    <span class="glyphicon glyphicon-plus-sign"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div ng-repeat="(header_key, header_value) in attack.headers" class="container header-pair">
+                                        <div class="row header-pair" ng-hide="panel.hideHeader(header_key)">
+                                            <div class="col-xs-3 header-key">
+                                                <input type="text" class="form-control" value="{{header_key}}">
+                                            </div>
+                                            <div class="col-xs-8 header-value">
+                                                <input type="text" class="form-control" value="{{header_value}}">
+                                            </div>
+                                            <div class="col-xs-1 remove-header-btn">
+                                                <a href="#" type="button" class="form-control btn-danger"
+                                                   title="Remove header" data-toggle="tooltip">
+                                                    <span class="glyphicon glyphicon-trash"></span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <textarea name="attack-request-payload-input" id="attack-request-payload-{{attack_id}}"
                                           cols="15" rows="10" class="form-control attack-request-payload" ng-model="attack.payload"
                                           ng-change="appspider.updateAttack(attack_id, 'payload', attack.payload)"></textarea>
                                 <div class="container-fluid appspider-btn">
-                                    <div class="row" ng-controller="ButtonController as button">
+                                    <div class="row">
                                         <!-- Single button -->
                                         <label class='select-view-lbl'>View:</label>
                                         <div class="btn-group">

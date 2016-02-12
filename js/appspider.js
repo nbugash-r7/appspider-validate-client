@@ -57,9 +57,10 @@ var AppSpider = {
             "ACCEPT-ENCODING",
             "ACCESS-CONTROL-REQUEST-HEADERS",
             "ACCESS-CONTROL-REQUEST-METHOD",
-            "CONTENT-LENGTHNECTION",
+            "CONNECTION",
             "CONTENT-LENGTH",
             "COOKIE",
+            "COOKIE 2",
             "CONTENT-TRANSFER-ENCODING",
             "DATE",
             "EXPECT",
@@ -83,8 +84,8 @@ var AppSpider = {
         load: function($scope, attack_id, callback){
             AppSpider.chrome.retrieve($scope, attack_id,callback);
         },
-        update: function(attack_id, attack_key, attack_value) {
-            AppSpider.chrome.retrieve(attack_id, function(attack) {
+        update: function($scope, attack_id, attack_key, attack_value) {
+            AppSpider.chrome.retrieve($scope, attack_id, function(attack) {
                 attack[attack_key] = attack_value;
                 AppSpider.attack.save(attack_id,attack);
             });
@@ -206,26 +207,6 @@ var AppSpider = {
         sendAttackUsingAJAX: function(attack_id, attack, success, error, always) {
             console.log('Sending attack using JQuery-Ajax!!');
             var headers = AppSpider.http.modifyHeaders(attack.headers);
-            //for (var header in attack.headers) {
-            //    /* Append 'appspider-' to restricted chrome headers */
-            //    if(attack.headers.hasOwnProperty(header)){
-            //        if(_.contains(restrictedChromeHeaders, header.toUpperCase())){
-            //            if (header === "Cookie") {
-            //                var cookie_str = "";
-            //                for(var key in attack.headers.Cookie) {
-            //                    if (attack.headers.Cookie.hasOwnProperty(key)){
-            //                        cookie_str += key + "=" + attack.headers.Cookie[key] + "; "
-            //                    }
-            //                }
-            //                headers[token+header] = cookie_str;
-            //            } else {
-            //                headers[token+header] = attack.headers[header];
-            //            }
-            //        } else {
-            //            headers[header] = attack.headers[header];
-            //        }
-            //    }
-            //}
             /* Using JQuery Ajax Calls */
             $.ajax({
                 type: attack.headers.REQUEST.method,
@@ -394,7 +375,12 @@ var AppSpider = {
 
     }
 };
+/* JQUERY */
+$(document).ready(function(){
+	$('[data-toggle="tooltip"]').tooltip();
+});
 
+/* CHROME API */
 chrome.storage.onChanged.addListener(function(attacks, namespace){
     for (var attack_id in attacks) {
         var attack_storage = attacks[attack_id];

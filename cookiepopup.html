@@ -8,6 +8,7 @@
     <script type="text/javascript" src="js/jquery-2.2.0.min.js"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
+    <script type="text/javascript" src="js/underscore-min.js"></script>
     <script type="text/javascript" src="js/appspider.js"></script>
     <script type="text/javascript" src="js/cookieapp.js"></script>
 </head>
@@ -19,14 +20,34 @@
         </a>
     </div>
     <h3>Cookies</h3>
-    <div ng-repeat="(key, value) in cookieCtrl.cookies">
+    <div ng-repeat="(key,value) in cookies">
         <div class="row">
             <div class="col-md-9">
-                <div class="input-group">
-                    <input type="text" class="form-control input-sm" value="{{key}}" aria-label="...">
+                <div class="input-group" remove-on-click>
+                    <input type="text" class="form-control input-sm" ng-model="key"
+                           ng-blur="attack.updateCookie(key, value)" aria-label="..."/>
                     <span class="input-group-btn key-value-separator"></span>
-                    <input type="text" class="form-control input-sm cookie-value" value="{{value}}"aria-label="...">
+                    <input type="text" class="form-control input-sm cookie-value" ng-model="value"
+                           ng-blur="cookieCtrl.updateCookie(key, value)" aria-label="..."/>
+                    <span class="input-group-btn key-value-separator"></span>
+                    <a href="#" class="form-control remove-cookie-pair" ng-click="removeKeyValuePair(key)">
+                        <span class="glyphicon glyphicon-trash"></span></a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="input-group" remove-on-click>
+                <input type="text" class="form-control input-sm" ng-model="key"
+                       aria-label="..." placeholder="Cookie key" />
+                <span class="input-group-btn key-value-separator"></span>
+                <input type="text" class="form-control input-sm cookie-value" ng-model="value"
+                       aria-label="..." placeholder="Cookie value" />
+                <span class="input-group-btn key-value-separator"></span>
+                <a href="#" class="form-control remove-cookie-pair">
+                    <span class="glyphicon glyphicon-trash"></span>
+                </a>
             </div>
         </div>
     </div>
@@ -34,8 +55,10 @@
         <div class="row">
             <div class="btn-group pull-right" role="group" aria-label="...">
                 <button class="btn btn-default clear-btn" id="clear-btn-{{cookieCtrl.id}}">Clear</button>
-                <button class="btn btn-default add-cookie-btn" id="add-cookie-btn-{{cookieCtrl.id}}">Add</button>
-                <button class="btn btn-default save-btn" id="save-cookie-{{cookieCtrl.id}}">Save</button>
+                <button class="btn btn-default add-cookie-btn" id="add-cookie-btn-{{cookieCtrl.id}}"
+                        ng-click="cookieCtrl.addCookies(key, value)">Add</button>
+                <button class="btn btn-default save-btn" id="save-cookie-{{cookieCtrl.id}}"
+                        ng-click="cookieCtrl.saveCookies(key, value)">Save</button>
             </div>
         </div>
     </div>
