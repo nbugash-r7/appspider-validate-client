@@ -8,6 +8,7 @@ var Angular = {
         AttackController: function($scope) {
             var appspider = this;
             appspider.view = 'RAW';
+
             AppSpider.attacks.getAllAttacks($scope, function(results){
                 appspider.getAttacks(results);
             });
@@ -33,6 +34,10 @@ var Angular = {
                     AppSpider.attack.save(attack_id, new_attack);
                 });
             };
+            appspider.updateAttackHeader = function(attack, header_key, header_value) {
+                attack.headers[header_key] = header_value;
+                AppSpider.attack.save(attack.id,attack);
+            }
         },
         PanelController: function() {
             var panel = this;
@@ -58,6 +63,10 @@ var Angular = {
             var button = this;
             button.view = 'RAW';
             button.protocoltype = 'HTTP';
+            button.request_type = 'GET';
+            button.attackRequestDropdown = function(method) {
+                button.request_type = method;
+            };
             button.viewDropdown = function(attack_id, viewtype){
                 console.log("View dropdown clicked with value " + viewtype + " on attack id: " + attack_id);
                 button.view = viewtype;
@@ -97,6 +106,7 @@ var Angular = {
             };
             button.sendRequest = function(attack_id){
                 console.log("Send request button clicked attack id: " + attack_id);
+
                 /*
                  * (1) Get attack from local storage
                  * (2) Create an angular http request / https request
@@ -167,6 +177,18 @@ var Angular = {
                     });
                 }
             }
+        },
+        removeHeader: function(){
+            return {
+                link: function(scope, elt, attributes) {
+                    scope.removeHeader = function(key){
+                        delete scope.attack.headers[key];
+                        /* Save changes to the chrome local storage */
+                        AppSpider.attack.save(scope.attack.id, scope.attack);
+                        console.log("Attack "+ scope.attack.id + " saved to chrome storage!");
+                    }
+                }
+            }
         }
     }
 };
@@ -174,3 +196,4 @@ AppSpiderValidateApp.controller('AttackController', ['$scope', Angular.controlle
 AppSpiderValidateApp.controller('PanelController', [Angular.controller.PanelController]);
 AppSpiderValidateApp.controller('ButtonController', ['$scope','$http', Angular.controller.ButtonController]);
 AppSpiderValidateApp.directive('prettifyheader', [Angular.directive.prettifyheader]);
+AppSpiderValidateApp.directive('removeHeader', [Angular.directive.removeHeader]);

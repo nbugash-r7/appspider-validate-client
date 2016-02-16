@@ -135,6 +135,7 @@ chrome.runtime.onConnect.addListener(function(channel) {
                             console.error("Background.js: Unable to handle " + message.type);
                             break;
                     }
+                break;
                 case "cookieapp.js":
                     switch(message.type) {
                         case "getCurrentStep":
