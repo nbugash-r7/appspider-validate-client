@@ -10,8 +10,10 @@
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/angular.min.js"></script>
     <script type="text/javascript" src="js/underscore-min.js"></script>
+    <script type="text/javascript" src="js/animatescroll.min.js"></script>
     <script type="text/javascript" src="js/appspider.js"></script>
     <script type="text/javascript" src="js/app.js"></script>
+    <script type="text/javascript" src="js/scroll.js"></script>
 </head>
 <body ng-controller="PanelController as panel">
 <div class="container" ng-controller="AttackController as appspider">
@@ -31,164 +33,214 @@
         </nav>
     </div>
     <div id="wrapper">
-        <div id="sidebar-wrapper" class="col-sm-2">
+        <div id="sidebar-wrapper" class="col-sm-2" ng-hide="true">
             <div id="sidebar">
                 <ul class="nav list-group">
-                    <li><a href="#" class="list-group-item">Attack Request</a></li>
-                    <li><a href="#" class="list-group-item">Payload</a></li>
-                    <li><a href="#" class="list-group-item">Attack Response</a></li>
-                    <li><a href="#" class="list-group-item">Content</a></li>
+                    <li><a href="#" class="list-group-item scroll-to-attack-request">Attack Request</a></li>
+                    <li><a href="#" class="list-group-item scroll-to-attack-payload">Payload</a></li>
+                    <li><a href="#" class="list-group-item scroll-to-attack-response">Attack Response</a></li>
+                    <li><a href="#" class="list-group-item scroll-to-attack-content">Content</a></li>
                 </ul>
             </div>
         </div>
-        <div id="main-wrapper" class="col-sm-10">
-            <div id="main">
-                <div class="page-header">
-                    <h3>AppSpider Validate</h3>
-                </div>
-                <div ng-repeat="(attack_id,attack) in appspider.attacks">
-                    <section ng-model="attack" ng-controller="ButtonController as button">
-                        <div class="panel" ng-show="panel.isSelected(attack_id)">
-                            <div class="form-group">
-                                <label for="attack-request-headers-{{attack_id}}">Attack request</label>
-                                <div class="raw" ng-show="button.isSelectedView('RAW')">
-                                    <textarea name="attack-request-header-input" id="attack-request-headers-{{attack_id}}"
-                                              cols="30" rows="10" class="form-control attack-request-headers"
-                                              ng-model="attack.headers" prettifyheader readonly></textarea>
-                                </div>
-                                <div class="prettify" ng-show="button.isSelectedView('Prettify')">
-                                    <div class="row header-spacing">
-                                        <div class="col-lg-12">
-                                            <div class="input-group" remove-header>
-                                                <div class="input-group-btn">
-                                                    <button class="btn btn-default dropdown-toggle prettify" data-toggle="dropdown"
-                                                            aria-haspopup="true" aria-expanded="false">{{attack.headers.REQUEST.method}} <span class="caret"></span>
-                                                    </button>
-                                                    <ul class="dropdown-menu">
-                                                        <li><a ng-click="button.attackRequestDropdown('GET')" href="#">GET</a></li>
-                                                        <li><a ng-click="button.attackRequestDropdown('POST')" href="#">POST</a></li>
-                                                    </ul>
+        <div id="main-wrapper" class="col-sm-12">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div id="main">
+                            <div class="page-header">
+                                <h3>AppSpider Validate</h3>
+                            </div>
+                            <div ng-repeat="(attack_id,attack) in appspider.attacks">
+                                <section ng-model="attack" ng-controller="ButtonController as button">
+                                    <div class="panel" ng-show="panel.isSelected(attack_id)">
+                                        <div class="form-group">
+                                            <label>
+                                                <h4 id="scroll-to-attack-request-{{attack_id}}">Attack request</h4>
+                                            </label>
+                                            <div class="raw" ng-show="button.isSelectedView('RAW')">
+                                    <textarea name="attack-request-header-input" title="attack-request-headers-{{attack_id}}"
+                                              id="attack-request-headers-{{attack_id}}" cols="30" rows="10"
+                                              class="form-control attack-request-headers" ng-model="attack.headers"
+                                              prettifyheader readonly></textarea>
+                                            </div>
+                                            <div class="prettify" ng-show="button.isSelectedView('Prettify')">
+                                                <div class="row header-spacing">
+                                                    <div class="col-lg-12">
+                                                        <div class="input-group" remove-header>
+                                                            <div class="input-group-btn">
+                                                                <button class="btn btn-default dropdown-toggle prettify" data-toggle="dropdown"
+                                                                        aria-haspopup="true" aria-expanded="false">{{attack.headers.REQUEST.method}} <span class="caret"></span>
+                                                                </button>
+                                                                <ul class="dropdown-menu">
+                                                                    <li><a ng-click="button.attackRequestDropdown('GET')" href="#">GET</a></li>
+                                                                    <li><a ng-click="button.attackRequestDropdown('POST')" href="#">POST</a></li>
+                                                                </ul>
+                                                            </div>
+                                                            <input type="text" class="form-control" aria-label="..." parse-request-header
+                                                                   value="{{button.protocoltype.toLocaleLowerCase()}}://{{attack.headers.Host}}{{attack.headers.REQUEST.uri}}"
+                                                                   ng-blur="parseRequestHeader()"/>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <input type="text" class="form-control" aria-label="..."
-                                                       value="{{attack.headers.Host}}{{attack.headers.REQUEST.uri}}"/>
-                                                <span class="input-group-btn"></span>
-                                                <a type="button" class="btn btn-success form-control" aria-label="..."
-                                                       value="+" data-toggle="tooltip" data-placement="right" title="Add new header">
-                                                    <span class="glyphicon glyphicon-plus-sign"></span>
-                                                </a>
+                                                <div class="container header-pair">
+                                                    <div class="row header-pair">
+                                                        <div class="col-xs-2 header-key">
+                                                            <label>Header</label>
+                                                        </div>
+                                                        <div class="col-xs-9 header-value">
+                                                            <label>Value</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div ng-repeat="(header_key, header_value) in attack.headers" class="container header-pair" ng-model="attack.headers">
+                                                    <div class="row header-pair" ng-hide="panel.hideHeader(header_key)">
+                                                        <div class="col-xs-2 header-key">
+                                                            <label for="attack-header-{{attack_id}}" class="header-key">{{header_key}}</label>
+                                                        </div>
+                                                        <div class="col-xs-9 header-value">
+                                                            <input id="attack-header-{{attack_id}}" type="text" class="form-control" ng-model="header_value"
+                                                                   ng-change="appspider.updateAttackHeader(attack, header_key, header_value)">
+                                                        </div>
+                                                        <div class="col-xs-1 remove-header-btn">
+                                                            <a href="#" type="button" class="form-control btn-danger"
+                                                               title="Remove header" data-toggle="tooltip" ng-click="appspider.removeAttackHeader(attack, header_key)">
+                                                                <span class="glyphicon glyphicon-trash"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container header-pair" ng-hide="true">
+                                                    <div class="row header-pair">
+                                                        <div class="col-xs-2 header-key">
+                                                            <label for="attack-header-cookies-{{attack_id}}" class="header-key">Cookies</label>
+                                                        </div>
+                                                        <div class="col-xs-9 header-value">
+                                                <textarea name="attack-header-cookies-{{attack_id}}" id="attack-header-cookies-{{attack_id}}"
+                                                          class="form-control attack-header-cookies" cols="30" rows="10"
+                                                          ng-model="attack.headers.Cookie" readonly prettifyheader=""></textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="container header-pair">
+                                                    <div class="row header-pair" ng-model="new_header">
+                                                        <div class="col-xs-2 header-key">
+                                                            <input type="text" class="form-control" ng-model="new_header.key">
+                                                        </div>
+                                                        <div class="col-xs-9 header-value">
+                                                            <input type="text" class="form-control" ng-model="new_header.value">
+                                                        </div>
+                                                        <div class="col-xs-1 add-header-btn">
+                                                            <a href="#" type="button" class="form-control btn-success"
+                                                               title="Add header" data-toggle="tooltip" ng-click="appspider.addAttackHeader(attack, new_header.key, new_header.value)">
+                                                                <span class="glyphicon glyphicon-plus-sign"></span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div ng-repeat="(header_key, header_value) in attack.headers" class="container header-pair" ng-model="attack.headers">
-                                        <div class="row header-pair" ng-hide="panel.hideHeader(header_key)" remove-on-click>
-                                            <div class="col-xs-3 header-key">
-                                                <input type="text" class="form-control" ng-model="header_key"
-                                                       ng-blur="appspider.updateAttackHeader(attack, header_key, header_value)">
-                                            </div>
-                                            <div class="col-xs-8 header-value">
-                                                <input type="text" class="form-control" ng-model="header_value"
-                                                       ng-blur="appspider.updateAttackHeader(attack, header_key, header_value)">
-                                            </div>
-                                            <div class="col-xs-1 remove-header-btn">
-                                                <a href="#" type="button" class="form-control btn-danger"
-                                                   title="Remove header" data-toggle="tooltip" ng-click="removeHeader(header_key)">
-                                                    <span class="glyphicon glyphicon-trash"></span>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <textarea name="attack-request-payload-input" id="attack-request-payload-{{attack_id}}"
+                                <textarea name="attack-request-payload-input" title="attack-request-payload-{{attack_id}}"
                                           cols="15" rows="10" class="form-control attack-request-payload" ng-model="attack.payload"
                                           ng-change="appspider.updateAttack(attack_id, 'payload', attack.payload)"></textarea>
-                                <div class="container-fluid appspider-btn">
-                                    <div class="row">
-                                        <!-- Single button -->
-                                        <label class='select-view-lbl'>View:</label>
-                                        <div class="btn-group">
-                                            <button id='select-view-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default dropdown-toggle select-view-btn"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{button.view}} <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a ng-click="button.viewDropdown(attack_id, 'RAW')"
-                                                       href="#">Raw</a></li>
-                                                <li><a ng-click="button.viewDropdown(attack_id, 'Prettify')"
-                                                       href="#">Prettify</a></li>
-                                            </ul>
-                                        </div>
-                                        <label class='protocol-lbl'>Protocol:</label>
-                                        <div class="btn-group">
-                                            <button id='protocol-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default dropdown-toggle protocol-btn"
-                                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                {{button.protocoltype}} <span class="caret"></span>
-                                            </button>
-                                            <ul class="dropdown-menu">
-                                                <li><a ng-click="button.protocolDropdown(attack_id, 'HTTP')"
-                                                       href="#" >HTTP</a></li>
-                                                <li><a ng-click="button.protocolDropdown(attack_id, 'HTTPS')"
-                                                       href="#" >HTTPS</a></li>
-                                            </ul>
-                                        </div>
-                                        <div class="btn-group pull-right" role="group" aria-label="...">
-                                            <button id='proxy-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default proxy-btn"
-                                                    ng-click="button.proxy(attack_id)">Proxy
-                                            </button>
-                                            <button id='edit-cookies-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default edit-cookies-btn"
-                                                    ng-click="button.editCookie(attack_id)">Edit cookies
-                                            </button>
-                                            <button id='reset-request-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default reset-request-btn"
-                                                    ng-click="button.resetRequest(attack_id)">Reset request
-                                            </button>
-                                            <button id='send-request-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default send-request-btn"
-                                                    ng-click="button.sendRequest(attack_id)">Send request
-                                            </button>
-                                            <button id='compare-btn-{{attack_id}}' type="button"
-                                                    class="btn btn-default compare-btn"
-                                                    ng-click="button.compare(attack_id)">Compare
-                                            </button>
-                                        </div>
+                                            <div class="container-fluid appspider-btn">
+                                                <div class="row">
+                                                    <!-- Single button -->
+                                                    <label class='select-view-lbl'>View:</label>
+                                                    <div class="btn-group">
+                                                        <button id='select-view-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default dropdown-toggle select-view-btn"
+                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            {{button.view}} <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a ng-click="button.viewDropdown(attack_id, 'RAW')"
+                                                                   href="#">Raw (readonly)</a></li>
+                                                            <li><a ng-click="button.viewDropdown(attack_id, 'Prettify')"
+                                                                   href="#">Prettify (editable)</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <label class='protocol-lbl'>Protocol:</label>
+                                                    <div class="btn-group">
+                                                        <button id='protocol-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default dropdown-toggle protocol-btn"
+                                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            {{button.protocoltype}} <span class="caret"></span>
+                                                        </button>
+                                                        <ul class="dropdown-menu">
+                                                            <li><a ng-click="button.protocolDropdown(attack_id, 'HTTP')"
+                                                                   href="#" >HTTP</a></li>
+                                                            <li><a ng-click="button.protocolDropdown(attack_id, 'HTTPS')"
+                                                                   href="#" >HTTPS</a></li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="btn-group pull-right" role="group" aria-label="...">
+                                                        <button id='proxy-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default proxy-btn"
+                                                                ng-click="button.proxy(attack_id)">Proxy
+                                                        </button>
+                                                        <button id='edit-cookies-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default edit-cookies-btn"
+                                                                ng-click="button.editCookie(attack_id)">Edit cookies
+                                                        </button>
+                                                        <button id='reset-request-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default reset-request-btn"
+                                                                ng-click="button.resetRequest(attack_id)">Reset request
+                                                        </button>
+                                                        <button id='send-request-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default send-request-btn"
+                                                                ng-click="button.sendRequest(attack_id)">Send request
+                                                        </button>
+                                                        <button id='compare-btn-{{attack_id}}' type="button"
+                                                                class="btn btn-default compare-btn"
+                                                                ng-click="button.compare(attack_id)">Compare
+                                                        </button>
+                                                    </div>
 
-                                    </div>
-                                </div>
-                                <label for="attack-response-headers-{{attack_id}}">Attack response</label>
-                                <textarea name="attack-response-header-input" id="attack-response-headers-{{attack_id}}"
-                                          cols="30" rows="10" class="form-control attack-response-headers" readonly
-                                          ng-model="attack.response_headers"></textarea>
+                                                </div>
+                                            </div>
+                                            <label>
+                                                <h4 class="attack-response-title">Attack response</h4>
+                                            </label>
+                                <textarea name="attack-response-header-input" title="attack-response-headers-{{attack_id}}"
+                                          id="attack-response-headers-{{attack_id}}" cols="30" rows="10"
+                                          class="form-control attack-response-headers" readonly ng-model="attack.response_headers">
+                                </textarea>
                                 <textarea name="attack-response-content-input" id="attack-response-content-{{attack_id}}"
                                           cols="30" rows="10" class="form-control attack-response-content"
                                           ng-model="attack.response_content" readonly
                                           ng-change="appspider.updateAttack(attack_id, response_content, attack.response_content)"></textarea>
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="btn-group" role="group" aria-label="...">
-                                            <button id="highlightVul-{{attack_id}}" type='button' class='btn btn-default'>
-                                                Highlight Vulnerability
-                                            </button>
-                                            <button id="showBrowser-{{attack_id}}" type='button' class='btn btn-default'>
-                                                Show Response in a Browser
-                                            </button>
+                                            <div class="container-fluid">
+                                                <div class="row">
+                                                    <div class="btn-group" role="group" aria-label="...">
+                                                        <button id="highlightVul-{{attack_id}}" type='button' class='btn btn-default'>
+                                                            Highlight Vulnerability
+                                                        </button>
+                                                        <button id="showBrowser-{{attack_id}}" type='button' class='btn btn-default'>
+                                                            Show Response in a Browser
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </section>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
             </div>
+            <!--<div id="main-wrapper" class="col-sm-12">-->
+            <!-- Place div#id HERE START -->
+            <!-- Place div#id HERE END -->
         </div>
     </div>
     <div id="footer" class="footer col-sm-12">
         <ul class="nav navbar-nav">
             <li><a href="#">Help</a></li>
-            <li><a href="#">About AppSpider</a></li>
-            <li><a href="#">Contact Us</a></li>
+            <li><a href="#">About AppSpider Validate</a></li>
+            <li>
+                <a href="#">Contact Us <span class="glyphicon glyphicon-envelope"></span></a>
+            </li>
         </ul>
     </div>
 </div>

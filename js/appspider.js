@@ -329,7 +329,8 @@ var AppSpider = {
                     headers: header_payload.split('\r\n\r\n')[0].trim(),
                     payload: header_payload.split('\r\n\r\n')[1].trim(),
                     description: array[2].trim(),
-                    response_headers: "Waiting for attack response....",
+                    response_headers: "Waiting for attack response....(click the " +
+                    "'Send request' button if response is taking a while)",
                     response_content: ""
                 }
             }

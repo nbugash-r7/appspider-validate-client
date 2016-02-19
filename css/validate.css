@@ -8,25 +8,26 @@ body {
     height: 100%;
     width: 100%;
     position: absolute;
-    top: 0px;
+    top: 0;
     left: 0;
     display: inline-block;
     margin-top: 50px;
+    padding-bottom: 117px;
 }
 #main-wrapper {
     height: 100%;
     overflow-y: auto;
-    padding: 0px 0 120px 0;
+    padding: 0 0 0 0;
 }
 #main {
     position: relative;
     height: 100%;
     overflow-y: auto;
-    padding: 0 15px 0px;
+    padding: 0 15px 0;
 }
 #sidebar-wrapper {
     height: 100%;
-    padding: 26px 0 0px 0;
+    padding: 26px 0 0 0;
     position: fixed;
     border-right: 1px solid gray;
 }
@@ -43,7 +44,7 @@ body {
 }
 @media (max-width: 500px) {
     body {
-        padding-top: 0px;
+        padding-top: 0;
     }
 }
 @media (min-width: 500px) {
@@ -53,7 +54,7 @@ body {
 }
 @media (max-width: 500px) {
     #main-wrapper {
-        padding-top: 0px;
+        padding-top: 0;
     }
 }
 @media (max-width: 500px) {
@@ -69,6 +70,7 @@ body {
     bottom:0;
     position:fixed;
     padding:10px;
+    left: 0;
 }
 
 #appspider-logo {
@@ -126,12 +128,21 @@ div.header-pair {
 div.header-key {
     padding-right: 0;
 }
+label.header-key {
+    padding-right: 0;
+    height: 24px;
+    font-size: 12px;
+}
 div.header-value {
     padding: 0 5px 0 ;
 }
 div.remove-header-btn {
      padding: 0 0 0;
  }
+
+div.add-header-btn {
+    padding: 0 0 0;
+}
 div.header-key input {
     height: 24px;
     font-size: 12px;
@@ -146,6 +157,13 @@ div.remove-header-btn a {
     text-align: center;
     text-decoration: none;
 }
+
+div.add-header-btn a {
+    height: 24px;
+    font-size: 10px;
+    text-align: center;
+    text-decoration: none;
+}
 div.header-spacing {
     padding: 0 0 10px 0;
 }
@@ -155,4 +173,7 @@ div.container.header-pair {
     margin-right: 18px;
     width: 100%;
     padding-right: 15px;
+}
+textarea.attack-header-cookies {
+    height: 100px;
 }

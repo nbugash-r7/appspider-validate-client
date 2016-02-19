@@ -7,7 +7,7 @@ var Angular = {
     controller: {
         AttackController: function($scope) {
             var appspider = this;
-            appspider.view = 'RAW';
+            appspider.view = 'Prettify';
 
             AppSpider.attacks.getAllAttacks($scope, function(results){
                 appspider.getAttacks(results);
@@ -37,12 +37,22 @@ var Angular = {
             appspider.updateAttackHeader = function(attack, header_key, header_value) {
                 attack.headers[header_key] = header_value;
                 AppSpider.attack.save(attack.id,attack);
+            };
+            appspider.removeAttackHeader = function(attack, header_key) {
+                delete attack.headers[header_key];
+                AppSpider.attack.save(attack.id,attack);
+            };
+            appspider.addAttackHeader = function(attack, header_key, header_value) {
+                if(header_key.trim() != "") {
+                    attack.headers[header_key] = header_value;
+                    AppSpider.attack.save(attack.id,attack);
+                }
             }
         },
         PanelController: function() {
             var panel = this;
             panel.tab = "1";
-            panel.view = "RAW";
+            panel.view = "Prettify";
             panel.selectTab = function (setTab) {
                 panel.tab = setTab;
             };
@@ -61,11 +71,12 @@ var Angular = {
         },
         ButtonController: function($scope, $http) {
             var button = this;
-            button.view = 'RAW';
+            button.view = 'Prettify';
             button.protocoltype = 'HTTP';
             button.request_type = 'GET';
             button.attackRequestDropdown = function(method) {
-                button.request_type = method;
+                $scope.attack.headers.REQUEST.method = method;
+                AppSpider.attack.save($scope.attack.id, $scope.attack);
             };
             button.viewDropdown = function(attack_id, viewtype){
                 console.log("View dropdown clicked with value " + viewtype + " on attack id: " + attack_id);
@@ -178,14 +189,16 @@ var Angular = {
                 }
             }
         },
-        removeHeader: function(){
+        parseRequestHeader: function() {
             return {
                 link: function(scope, elt, attributes) {
-                    scope.removeHeader = function(key){
-                        delete scope.attack.headers[key];
-                        /* Save changes to the chrome local storage */
-                        AppSpider.attack.save(scope.attack.id, scope.attack);
-                        console.log("Attack "+ scope.attack.id + " saved to chrome storage!");
+                    scope.parseRequestHeader = function() {
+                        var url_string = elt.val();
+                        var url = document.createElement('a');
+                        url.href = url_string;
+                        this.attack.headers.REQUEST.uri = url.pathname;
+                        this.attack.headers.Host = url.host;
+                        AppSpider.attack.save(this.attack.id, this.attack);
                     }
                 }
             }
@@ -196,4 +209,4 @@ AppSpiderValidateApp.controller('AttackController', ['$scope', Angular.controlle
 AppSpiderValidateApp.controller('PanelController', [Angular.controller.PanelController]);
 AppSpiderValidateApp.controller('ButtonController', ['$scope','$http', Angular.controller.ButtonController]);
 AppSpiderValidateApp.directive('prettifyheader', [Angular.directive.prettifyheader]);
-AppSpiderValidateApp.directive('removeHeader', [Angular.directive.removeHeader]);
+AppSpiderValidateApp.directive('parseRequestHeader', [Angular.directive.parseRequestHeader]);
