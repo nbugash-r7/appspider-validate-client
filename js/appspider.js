@@ -377,8 +377,10 @@ var AppSpider = {
     }
 };
 /* JQUERY */
-$(document).ready(function(){
-	$('[data-toggle="tooltip"]').tooltip();
+$('#appspider-logo').click(function(e){
+    console.log("AppSpider logo clicked!!");
+    e.preventDefault();
+    $('#wrapper').toggleClass("toggled");
 });
 
 /* CHROME API */

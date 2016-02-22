@@ -53,6 +53,8 @@ var Angular = {
             var panel = this;
             panel.tab = "1";
             panel.view = "Prettify";
+            panel.sidebar = { width: 0};
+            panel.mainbar = { width: '100%'};
             panel.selectTab = function (setTab) {
                 panel.tab = setTab;
             };
@@ -67,7 +69,19 @@ var Angular = {
                 } else {
                     return false;
                 }
-            }
+            };
+            panel.toggleNavbar = function(){
+                if (panel.sidebar.width === '16.66666667%' ) {
+                    panel.sidebar.width = '0';
+                } else {
+                    panel.sidebar.width = '16.66666667%';
+                }
+                if (panel.mainbar.width === '100%') {
+                    panel.mainbar.width = '83.33333333%';
+                } else {
+                    panel.mainbar.width = '100%'
+                }
+            };
         },
         ButtonController: function($scope, $http) {
             var button = this;

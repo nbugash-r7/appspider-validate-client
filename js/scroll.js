@@ -1,15 +1,29 @@
 $(document).ready(function(){
+	var $container = $("html,body,div#main-wrapper");
+
 	$(".scroll-to-attack-request").click(function () {
-			$('html,body').animate({scrollTop: 1000}, 2000);
+		console.log("scrolling to attack request");
+		$container.animate({
+			scrollTop: 33
+			}, 'slow');
 		});
 	$('.scroll-to-attack-payload').click(function () {
-			$('html,body').animate({scrollTop: '+=200px'}, 2000);
+		console.log("scrolling to attack payload");
+		$container.animate({scrollTop:
+			$('.attack-request-payload-title').offset().top
+			}, 'slow');
 		});
 	$(".scroll-to-attack-response").click(function () {
-			$('html,body').animate({scrollTop: '+=300px'}, 2000);
+		console.log("scrolling to attack response");
+		$container.animate({
+			scrollTop: $('.attack-response-headers-title')
+			}, 'slow');
 		});
 	$(".scroll-to-attack-content").click(function(){
-			$('html,body').animate({scrollTop: '+=1000'}, 2000);
+		console.log("scrolling to attack content");
+		$container.animate({
+			scrollTop: $(document).height()
+			}, 'slow');
 		});
 });
 
