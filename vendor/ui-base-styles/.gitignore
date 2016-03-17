@@ -1,0 +1,20 @@
+# Dependencies
+node_modules
+
+# VIM
+*.swp
+
+# Emacs
+*~
+\#*
+
+# Other
+/public/vendor
+nohup.out
+
+# IDEs
+.idea/*
+.project
+
+# Sass
+.sass-cache

@@ -1,0 +1,211 @@
+//== Global
+$border-radius-base: 3px;
+
+//== Typography
+//
+//## Font, line-height, and color for body text, headings, and more.
+
+// TODO: Include this directly in repo.
+@import "../../bower_components/roboto-fontface/css/roboto-fontface.scss";
+
+$rapid7-font-path: "../fonts" !default;
+$font-family-base: Roboto;
+$headings-font-weight: 300;
+
+//** Number of columns in the grid.
+$grid-columns:              24;
+//** Padding between columns. Gets divided in half for the left and right.
+$grid-gutter-width:         10px;
+
+// Small screen / tablet
+//** Deprecated `$screen-sm` as of v3.0.1
+$screen-sm:                  1024px;
+$screen-sm-min:              ($screen-sm - 1);
+//** Deprecated `$screen-tablet` as of v3.0.1
+$screen-tablet:              $screen-sm-min;
+
+// Medium screen / desktop
+//** Deprecated `$screen-md` as of v3.0.1
+$screen-md:                  1360px;
+$screen-md-min:              ($screen-md - 1);
+//** Deprecated `$screen-desktop` as of v3.0.1
+$screen-desktop:             $screen-md-min;
+
+// Large screen / wide desktop
+//** Deprecated `$screen-lg` as of v3.0.1
+$screen-lg:                  1600px;
+$screen-lg-min:              ($screen-lg - 1);
+//** Deprecated `$screen-lg-desktop` as of v3.0.1
+$screen-lg-desktop:          $screen-lg-min;
+
+// So media queries don't overlap when required, provide a maximum
+$screen-xs-max:              ($screen-sm-min - 1);
+$screen-sm-max:              ($screen-md-min - 1);
+$screen-md-max:              ($screen-lg-min - 1);
+
+$font-size-base: 13px;
+
+//== PALETTE ==
+// For Graphs | Charts | Treatments - see http://styleguide.ux-style-guides.dev.lax.rapid7.com/elements/palette for more details
+
+// Full Palette
+$palette-full-first: #8cd5ef;
+$palette-full-second: #2884b2;
+$palette-full-third: #5fbd83;
+$palette-full-fourth: #85caa5;
+$palette-full-fifth: #29a7a4;
+$palette-full-sixth: #59c5c9;
+$palette-full-seventh: #fae475;
+$palette-full-eighth: #e48c3c;
+$palette-full-ninth: #ce493e;
+$palette-full-tenth: #b22a8c;
+$palette-full-eleventh: #c7e4e6;
+$palette-full-twelfth: #d6dadb;
+
+// Risk
+$palette-risk: #e66031;
+$palette-unknown: #c7e4e6;
+
+// Good-Bad | Yes-No | On-Off
+$opposites-good-opt1: #60bd83;
+$opposites-bad-opt1: #cd4a3e;
+
+$opposites-good-opt2: #81c9a4;
+$opposites-bad-opt2: #cd4a3e;
+
+$opposites-good-opt3: #2ba7a3;
+$opposites-bad-opt3: #e38a3a;
+
+$opposites-on: #2a82b0;
+$opposites-off: #e38a3a;
+
+// 'Intensity' Combos
+$intensity-dbl-low-opt1: #fce36b;
+$intensity-dbl-high-opt1: #ce4738;
+
+$intensity-dbl-low-opt2: #e58b2f;
+$intensity-dbl-high-opt2: #fce36b;
+
+$intensity-dbl-low-opt3: #e58b2f;
+$intensity-dbl-high-opt3: #ce4738;
+
+$intensity-trpl-low-opt1: #fce36b;
+$intensity-trpl-med-opt1: #e58b2f;
+$intensity-trpl-high-opt1: #ce4738;
+
+$intensity-trpl-low-opt2: #8ad5ee;
+$intensity-trpl-med-opt2: #2582b3;
+$intensity-trpl-high-opt2: #54c4ca;
+
+$intensity-trpl-low-opt3: #e58b2f;
+$intensity-trpl-med-opt3: #ce4738;
+$intensity-trpl-high-opt3: #b4218c;
+
+$intensity-trpl-low-opt4: #82caa4;
+$intensity-trpl-med-opt4: #5cbe81;
+$intensity-trpl-high-opt4: #1fa8a4;
+
+$intensity-quad-low-opt1: #fce36b;
+$intensity-quad-med-opt1: #e58b2f;
+$intensity-quad-high-opt1: #ce4738;
+$intensity-quad-urgent-opt1: #b4218c;
+
+$intensity-quad-low-opt2: #1fa8a4;
+$intensity-quad-med-opt2: #54c4ca;
+$intensity-quad-high-opt2: #8ad5ee;
+$intensity-quad-urgent-opt2: #2582b3;
+
+// 'Mixed' Combos
+$mixed-dbl-first-opt1: #54c4ca;
+$mixed-dbl-second-opt1: #8ad5ee;
+
+$mixed-dbl-first-opt2: #1fa8a4;
+$mixed-dbl-second-opt2: #54c4ca;
+
+$mixed-dbl-first-opt3: #e58b2f;
+$mixed-dbl-second-opt3: #ce4738;
+
+$mixed-dbl-first-opt4: #5cbe81;
+$mixed-dbl-second-opt4: #82caa4;
+
+$mixed-dbl-first-opt5: #2582b3;
+$mixed-dbl-second-opt5: #82caa4;
+
+$mixed-dbl-first-opt6: #5cbe81;
+$mixed-dbl-second-opt6: #fce36b;
+
+$mixed-dbl-first-opt7: #e58b2f;
+$mixed-dbl-second-opt7: #fce36b;
+
+$mixed-dbl-first-opt8: #b4218c;
+$mixed-dbl-second-opt8: #ce4738;
+
+$mixed-trpl-first-opt1: #1fa8a4;
+$mixed-trpl-second-opt1: #82caa4;
+$mixed-trpl-third-opt1: #fce36b;
+
+$mixed-trpl-first-opt2: #2582b3;
+$mixed-trpl-second-opt2: #8ad5ee;
+$mixed-trpl-third-opt2: #fce36b;
+
+$mixed-trpl-first-opt3: #fce36b;
+$mixed-trpl-second-opt3: #ce4738;
+$mixed-trpl-third-opt3: #e58b2f;
+
+$mixed-trpl-first-opt4: #2582b3;
+$mixed-trpl-second-opt4: #5cbe81;
+$mixed-trpl-third-opt4: #8ad5ee;
+
+$mixed-quad-first-opt1: #82caa4;
+$mixed-quad-second-opt1: #8ad5ee;
+$mixed-quad-third-opt1: #1fa8a4;
+$mixed-quad-fourth-opt1: #fce36b;
+
+$mixed-quad-first-opt2: #2582b3;
+$mixed-quad-second-opt2: #8ad5ee;
+$mixed-quad-third-opt2: #1fa8a4;
+$mixed-quad-fourth-opt2: #82caa4;
+
+$mixed-quad-first-opt3: #ce4738;
+$mixed-quad-second-opt3: #b4218c;
+$mixed-quad-third-opt3: #fce36b;
+$mixed-quad-fourth-opt3: #e58b2f;
+
+$mixed-quad-first-opt4: #5cbe81;
+$mixed-quad-second-opt4: #e58b2f;
+$mixed-quad-third-opt4: #8ad5ee;
+$mixed-quad-fourth-opt4: #1fa8a4;
+
+$mixed-quint-first-opt1: #e58b2f;
+$mixed-quint-second-opt1: #fce36b;
+$mixed-quint-third-opt1: #1fa8a4;
+$mixed-quint-fourth-opt1: #82caa4;
+$mixed-quint-fifth-opt1: #2582b3;
+
+$mixed-quint-first-opt2: #5cbe81;
+$mixed-quint-second-opt2: #1fa8a4;
+$mixed-quint-third-opt2: #e58b2f;
+$mixed-quint-fourth-opt2: #8ad5ee;
+$mixed-quint-fifth-opt2: #2582b3;
+
+$mixed-quint-first-opt3: #2582b3;
+$mixed-quint-second-opt3: #54c4ca;
+$mixed-quint-third-opt3: #82caa4;
+$mixed-quint-fourth-opt3: #ce4738;
+$mixed-quint-fifth-opt3: #e58b2f;
+
+$mixed-quint-first-opt4: #ce4738;
+$mixed-quint-second-opt4: #e58b2f;
+$mixed-quint-third-opt4: #54c4ca;
+$mixed-quint-fourth-opt4: #1fa8a4;
+$mixed-quint-fifth-opt4: #fce36b;
+
+//== END: PALETTE ==
+
+$cell-background-color: #212933;
+$hover-color: #414d58;
+$hover-secondary: #333;
+$hover-tertiary: #000;
+
+// Inputs
+$input-border-focus: #28bffc;

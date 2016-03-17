@@ -19,9 +19,9 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                             chrome.storage.local.clear(function(){
                                 console.log("Clearing chrome local storage");
                                 /* (2) Decode http request */
-                                var decodedhttprequest = AppSpider.http.decodeRequest(encodedhttp);
+                                var decodedhttprequest = appspider.http.decodeRequest(encodedhttp);
                                 /* (3) Split the decoded http request into an array of requests */
-                                var requests = _.compact(AppSpider.http.splitRequests(decodedhttprequest));
+                                var requests = _.compact(appspider.http.splitRequests(decodedhttprequest));
                                 /* (4) For each request in the request array, parse into
                                  * a. attack request header
                                  * b. attack request payload
@@ -30,68 +30,50 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                                  * e. attack response content
                                  * */
                                 var step = 1;
+                                var parsed_attacked = [];
                                 for (var index = 0; index < requests.length; index++ ) {
                                     if (_.size(requests[index])!= 0 ){
-                                        var attack = AppSpider.http.splitRequest(requests[index]);
-                                        attack.id = step;
-                                        attack.headers = AppSpider.helper.convertHeaderStringToJSON(attack.headers);
-                                        /* Save attack to chrome.storage.local */
                                         (function(){
-                                            var attack_obj = {};
-                                            attack_obj[step] = attack;
-                                            chrome.storage.local.set(attack_obj, function(){
-                                                var key = Object.keys(attack_obj)[0];
-                                                console.log("Save attack id: " + key + " with just http request!");
-                                                switch (message.data.send_request_as) {
-                                                    case 'xmlhttprequest':
-                                                        /* Use xmlhttprequest to send the attack */
-                                                        AppSpider.http.sendAttackUsingXMLHTTPRequest(key, attack_obj[key],
-                                                            function(xhr) {
-                                                                attack_obj[key].response_headers = xhr.getAllResponseHeaders();
-                                                                attack_obj[key].response_content = xhr.responseText;
-                                                                chrome.storage.local.set(attack_obj, function () {
-                                                                    console.log("Saving attack id: " + key +
-                                                                        " to local storage with http response!!");
-                                                                });
-                                                            },
-                                                            function(err){
-                                                                console.error("Background.js: xhr.status: "+ err.status
-                                                                    + " for attack id: " + key);
+                                            /* attack now has headers, payload, description */
+                                            var attack = appspider.http.splitRequest(requests[index]);
+                                            /* setting the attack id */
+                                            attack.id = step;
+                                            /* converting headers from String to JSON object */
+                                            attack.request.headers = appspider.util.convertHeaderStringToJSON(attack.request.headers);
+                                            switch (message.data.send_request_as) {
+                                                case 'xmlhttprequest':
+                                                    appspider.http.send.viaXHR(attack,
+                                                        function (xhr) {
+                                                            /* On a successful response */
+                                                            attack.response.headers = appspider.util.convertHeaderStringToJSON(xhr.getAllResponseHeaders());
+                                                            attack.response.content = xhr.responseText;
+                                                            /* Save attack to chrome storage */
+                                                            appspider.chrome.storage.local.saveAttack(attack, function () {
+                                                                parsed_attacked.push(attack.id);
+                                                                console.log('Attack id: ' + attack.id + ' saved!');
+                                                                if (parsed_attacked.length === requests.length) {
+                                                                    appspider.chrome.window.open('plugin.html', 940, 745);
+                                                                }
+                                                            });
+                                                        },
+                                                        function (error) {
+                                                            /* On an error response */
+                                                            console.error('Background.js: ' + xhr.status + ' ' +
+                                                                'error status ' + error.status + ' for attack id: ' +
+                                                                attack.id);
+                                                        }
+                                                    );
+                                                    break;
+                                                case 'ajax':
+                                                    console.log('Sending http request via ajax is not yet implemented');
+                                                    break;
+                                                default:
+                                                    console.error('Error: Unable to verify method of sending data!');
+                                                    break;
+                                            }
 
-                                                            });
-                                                        break;
-                                                    case 'ajax':
-                                                        /* Use ajax request to send the attack */
-                                                        AppSpider.http.sendAttackUsingAJAX(key,attack_obj[key],
-                                                            function(data, text_status, jqXHR){ // Success
-                                                                console.log("Receive http response for attack id: " + key);
-                                                                attack_obj[key].response_headers = jqXHR.getAllResponseHeaders();
-                                                                attack_obj[key].response_content = data.responseText;
-                                                                chrome.storage.local.set(attack_obj, function(){
-                                                                    console.log("Saving attack id: "+ key +
-                                                                        " to local storage with http response!!");
-                                                                });
-                                                            },function(jqXHR, textStatus, errorThrown){ // fail
-                                                                console.error(textStatus + " Unable to send ajax request with message '" +
-                                                                    errorThrown + "'")
-                                                            }, function(data, text_status, jqXHR){ //always
-                                                                console.log("Ajax completed!!");
-                                                            });
-                                                        break;
-                                                    default:
-                                                        console.error("Background.js: Unknown request type! " +
-                                                            "Use either 'xmlhttprequest' or 'ajax'");
-                                                        break;
-                                                }
-                                            });
                                         })();
                                         step++;
-                                        chrome.storage.local.get(null, function(attacks){
-                                            if(_.size(attacks) >= requests.length){
-                                                AppSpider.chrome.openNewWindow('validate.html', 940, 745);
-                                            }
-                                        });
-
                                     }
                                 }
                             });

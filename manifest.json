@@ -1,27 +1,32 @@
 {
-  "name": "AppSpider Chrome Validate",
-  "description": "Chrome extension used to validate web attacks",
+  "name": "AppSpider Validate Chrome Plugin",
+  "description": "Chrome plugin used to enable the validate button in AppSpider reports.",
   "version": "0.0.1",
   "manifest_version": 2,
   "background": {
-    "scripts": ["js/jquery-2.2.0.min.js",
-                "js/underscore-min.js",
-                "js/appspider.js",
-                "background.js"],
+    "scripts": [
+      "vendor/jquery/dist/jquery.min.js",
+      "vendor/underscore/underscore-min.js",
+      "js/plugin/chrome.js",
+      "js/plugin/http.js",
+      "js/plugin/util.js",
+      "background.js"
+    ],
     "persistent": true
+  },
+  "browser_action": {
+    "default_popup":"popup.html"
   },
   "content_scripts": [
     {
-      "matches":["<all_urls>"],
-      "js": [
-        "content.js"
-      ]
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
     }
   ],
   "permissions": [
+    "<all_urls>",
     "webRequest",
     "webRequestBlocking",
-    "<all_urls>",
     "storage",
     "unlimitedStorage",
     "tabs",

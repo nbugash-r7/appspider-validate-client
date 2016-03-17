@@ -1,0 +1,11 @@
+{
+  "name": "ui-base-styles",
+  "version": "1.3.0",
+  "dependencies": {
+    "bootstrap-sass": "~3.3.3",
+    "roboto-fontface": "~0.4.3"
+  },
+  "ignore": [
+    "node_modules"
+  ]
+}

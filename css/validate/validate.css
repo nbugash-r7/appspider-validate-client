@@ -1,0 +1,50 @@
+#appspider-logo {
+    height: 30px;
+}
+
+/* sidebar modification */
+#sidebar-wrapper {
+    height: 100%;
+    padding: 26px 0 0 0;
+    position: fixed;
+    border-right: 1px solid gray;
+    /* sidebar modification */
+    left: 250px;
+    width: 0;
+    margin-left: -250px;
+    overflow-y: auto;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+}
+
+#sidebar .list-group-item {
+    border-radius: 0;
+    border-left: 0;
+    border-right: 0;
+    border-top: 0;
+}
+
+.page-header {
+    margin: 65px 0 20px;
+    text-align: center;
+}
+
+.appspider-panel {
+    background-color: inherit;
+}
+
+.appspider-btn {
+    height: 34px;
+}
+
+.appspider-btn-group {
+    padding-top: 10px;
+}

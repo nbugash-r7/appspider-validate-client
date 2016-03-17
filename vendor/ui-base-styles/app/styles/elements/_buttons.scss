@@ -1,0 +1,140 @@
+.btn {
+  box-sizing: border-box;
+  height: 25px;
+  font-size: 11px;
+  padding: 4px 15px;
+  text-transform: uppercase;
+}
+
+.btn-xs {
+   height: 20px;
+   font-size: 10px;
+   padding: 0 10px;
+   font-family: Roboto-Medium;
+}
+
+.btn-default {
+  &.disabled {
+    background-color: $btn-default-bg-disabled;
+    border-color: $btn-default-bg-disabled;
+  }
+
+  &:hover, &.hover {
+     background-color: $btn-default-bg-hover;
+     border-color: $btn-default-bg-hover;
+  }
+}
+
+// TODO: We could likely eliminate the separate "border-disabled", "border-hover" colors.
+.btn-first-level {
+   color: $btn-default-color;
+   background-color: $btn-first-level-bg;
+   border-color: $btn-first-level-border;
+
+   &.disabled {
+      color: $btn-first-level-color-disabled;
+      background-color: $btn-first-level-bg-disabled;
+      border-color: $btn-first-level-border-disabled;
+   }
+
+   &:hover, &.hover {
+      background-color: $btn-first-level-bg-hover;
+      border-color: $btn-first-level-border-hover;
+   }
+}
+
+.btn-second-level {
+   color: $btn-default-color;
+   background-color: $btn-second-level-bg;
+   border-color: $btn-second-level-border;
+
+   &.disabled {
+      color: $btn-second-level-color-disabled;
+      background-color: $btn-second-level-bg-disabled;
+      border-color: $btn-second-level-border-disabled;
+   }
+
+   &:hover, &.hover {
+      background-color: $btn-second-level-bg-hover;
+      border-color: $btn-second-level-border-hover;
+   }
+}
+
+.btn-highlight {
+   color: $btn-default-color;
+   background-color: $btn-highlight-bg;
+   border-color: $btn-highlight-border;
+
+   &.disabled {
+      color: $btn-highlight-color-disabled;
+      background-color: $btn-highlight-bg-disabled;
+      border-color: $btn-highlight-border-disabled;
+   }
+
+   &:hover, &.hover {
+      background-color: $btn-highlight-bg-hover;
+      border-color: $btn-highlight-border-hover;
+   }
+}
+
+.btn-nav {
+   color: $btn-default-color;
+   background-color: $btn-nav-bg;
+   border-color: $btn-nav-border !important;
+
+   &.disabled {
+      color: $btn-nav-color-disabled;
+      background-color: $btn-nav-bg-disabled;
+      border-color: $btn-nav-border-disabled;
+   }
+
+   &:hover, &.hover {
+      background-color: $btn-nav-bg-hover;
+      border-color: $btn-nav-border-hover;
+   }
+}
+
+.btn-action {
+   color: $btn-default-color;
+   background-color: $btn-action-bg;
+   border-color: $btn-action-border !important;
+
+   &.disabled {
+      color: $btn-action-color-disabled;
+      background-color: $btn-action-bg-disabled;
+      border-color: $btn-action-border-disabled;
+   }
+
+   &:hover, &.hover {
+      background-color: $btn-action-bg-hover;
+      border-color: $btn-action-border-hover;
+   }
+}
+
+// ============ Modal styles ==========//
+.modal {
+   .modal-content {
+      .modal-header {
+         background-color: $modal-header-bg;
+         padding: 15px 25px 15px 30px;
+         border-bottom: none;
+         .modal-title {
+            color: $btn-default-color;
+         }
+         .close {
+            opacity: 1;
+            color: $btn-default-color;
+            font-size: 1.75em;
+            font-weight: $headings-font-weight;
+            margin-top: -5px;
+         }
+      }
+   }
+}
+
+.modal-backdrop {
+   z-index: 100;
+   position: fixed;
+   width: 100%;
+   height: 100%;
+}

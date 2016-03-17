@@ -1,0 +1,113 @@
+//== Colors
+//
+//## Gray and brand colors for use across Bootstrap.
+$gallery: #eeeeee;
+$iron:    #dadfe1;
+
+//== Scaffolding
+//
+//## Settings for some of the most global styles.
+
+//** Background colors.
+$body-bg:               #22313f;
+
+//** Global text color on `<body>`.
+$text-color:            $iron;
+
+$border-radius-base: 3px;
+$border-radius-small: 3px;
+$border-radius-large: 3px;
+
+$btn-default-color:              #fff;
+$btn-default-bg:                 #25bdff;
+$btn-default-border:             #25bdff;
+
+//========== Text states ==========//
+$state-info-text:                $btn-default-bg;
+
+//========== Options for Default Button ==============//
+$btn-default-bg-disabled: #a3e2fd;
+$btn-default-bg-hover: #0093d3;
+
+//========== Options for Secondary Button Level 1 ==============//
+$btn-first-level-bg:                 #414d58;
+$btn-first-level-border:             #414d58;
+
+$btn-first-level-color-disabled:     #414d58;
+$btn-first-level-bg-disabled:        #243543;
+$btn-first-level-border-disabled:    #243543;
+
+$btn-first-level-bg-hover:           #37414a;
+$btn-first-level-border-hover:       #37414a;
+
+//========== Options for Secondary Button Level 2 ==============//
+$btn-second-level-bg:                 #a0aeb4;
+$btn-second-level-border:             #a0aeb4;
+
+$btn-second-level-color-disabled:     #414d58;
+$btn-second-level-bg-disabled:        #243543;
+$btn-second-level-border-disabled:    #243543;
+
+$btn-second-level-bg-hover:           #667c86;
+$btn-second-level-border-hover:       #667c86;
+
+//========== Options for highlight Button ==============//
+$btn-highlight-bg:                 #e68c31;
+$btn-highlight-border:             #e68c31;
+
+$btn-highlight-color-disabled:     #fff;
+$btn-highlight-bg-disabled:        #fecfa0;
+$btn-highlight-border-disabled:    #fecfa0;
+
+$btn-highlight-bg-hover:           #e57606;
+$btn-highlight-border-hover:       #e57606;
+
+//========== Options for Nav Button ==============//
+$btn-nav-bg:                 transparent;
+$btn-nav-border:             #414d58;
+
+$btn-nav-color-disabled:     #414d58;
+$btn-nav-bg-disabled:        transparent;
+$btn-nav-border-disabled:    #414d58;
+
+$btn-nav-bg-hover:           #25bdff;
+$btn-nav-border-hover:       #25bdff;
+
+//========== Options for Action Button ==============//
+$btn-action-bg:                 transparent;
+$btn-action-border:             none;
+
+$btn-action-color-disabled:     #414d58;
+$btn-action-bg-disabled:        transparent;
+$btn-action-border-disabled:    none;
+
+$btn-action-bg-hover:           #414d58;
+$btn-action-border-hover:       #414d58;
+
+//========= Modal ====================================//
+$modal-content-bg:               #EBEFF3;
+$modal-header-bg:                #243543;
+
+
+
+$padding-base-vertical:     8px;
+$padding-base-horizontal:   20px;
+
+//========= Main background gradient =================//
+%background-gradient {
+	background-image: -webkit-gradient(
+		linear,
+		left top,
+		left bottom,
+		color-stop(0, #14202B),
+		color-stop(0.4, #15202C),
+		color-stop(0.56, #16232F),
+		color-stop(0.71, #182734),
+		color-stop(1, #162532)
+	);
+	background-image: -o-linear-gradient(bottom, #14202B 0%, #15202C 40%, #16232F 56%, #182734 71%, #162532 100%);
+	background-image: -moz-linear-gradient(bottom, #14202B 0%, #15202C 40%, #16232F 56%, #182734 71%, #162532 100%);
+	background-image: -webkit-linear-gradient(bottom, #14202B 0%, #15202C 40%, #16232F 56%, #182734 71%, #162532 100%);
+	background-image: -ms-linear-gradient(bottom, #14202B 0%, #15202C 40%, #16232F 56%, #182734 71%, #162532 100%);
+	background-image: linear-gradient(to bottom, #14202B 0%, #15202C 40%, #16232F 56%, #182734 71%, #162532 100%);
+}

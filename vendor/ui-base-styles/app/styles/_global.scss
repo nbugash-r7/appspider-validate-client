@@ -1,0 +1,11 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+    margin: 0;
+    @extend %background-gradient;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

@@ -1,0 +1,30 @@
+body {
+   background-color: $body-bg;
+}
+
+// ============ Modal styles ==========//
+.modal {
+   .modal-content {
+      .modal-header {
+         background-color: $modal-header-bg;
+         padding: 15px 25px 15px 30px;
+         border-bottom: none;
+         .modal-title {
+            color: $btn-default-color;
+         }
+         .close {
+            opacity: 1;
+            color: $btn-default-color;
+            font-size: 1.75em;
+            font-weight: $headings-font-weight;
+            margin-top: -5px;
+         }
+      }
+   }
+}
+
+.modal-backdrop {
+   position: fixed;
+   width: 100%;
+   height: 100%;
+}
